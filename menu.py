@@ -57,19 +57,14 @@ def entete_menu(titre):
 	m += "%79s" % heure
 	return m
 
-def menu():
+def menu( entete, libel ):
 	"""
 		Affichage du menu proprement dit
 	"""
 	cls()
 	## Nblig pour affichage du menu -2 entete et -3 bas de page
 	nbl_menu = ligs-2-3
-	print entete_menu("MENU DEV/TEST")
-	libel = [ "Activite VO / DF" ,
-				"IMMO DF",
-				"ADONIX ENTREPRISE",
-				"CONNEXION ANCIEN SERVEUR"
-			 ]
+	print entete_menu(entete)
 	l = len(libel)
 	nbl = 0
 	for x in range(0, (nbl_menu-(l*2))/2):
@@ -144,19 +139,29 @@ def non_implementee():
 	"""
 	espace()
 
-def main():
-	""" 
-	La fonction principale
-	de gestion du menu
-	"""
+def menu_main():
+	entete = "MENU DEV/TEST"
+	libel = [ "Activite VO / DF" ,
+				"IMMO DF",
+				"ADONIX ENTREPRISE",
+				"CONNEXION ANCIEN SERVEUR"
+			 ]
 	fnc = {
 		'1':appli_DF,
 		'2':appli_IMMODF,
 		'3':appli_ENTREPRISE,
 		'4':telnet_ancien_serveur,
 		}
+	return entete, libel, fnc
+
+def main():
+	""" 
+	La fonction principale
+	de gestion du menu
+	"""
 	while True:
-		menu()
+		entete, libel, fnc = menu_main()
+		menu( entete, libel )
 		cmd = raw_input( prompt() )
 		if cmd in fnc.keys():
 			fnc[cmd]()
